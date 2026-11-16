@@ -1,0 +1,32 @@
+classDiagram
+    class User {
+        -Long id
+        -String firstName
+        -String lastName
+        -String email
+        -String password
+        -String phone
+        -Role role
+        -UserStatus status
+        -LocalDateTime createdAt
+        -LocalDateTime updatedAt
+        +register()
+        +authenticate()
+        +updateProfile()
+        +changeRole()
+        +deactivate()
+    }
+    class Role {
+        <<enumeration>>
+        CLIENT
+        PROVIDER
+        ADMIN
+    }
+    class UserStatus {
+        <<enumeration>>
+        ACTIVE
+        INACTIVE
+        BLOCKED
+    }
+    User --> Role : role
+    User --> UserStatus : status

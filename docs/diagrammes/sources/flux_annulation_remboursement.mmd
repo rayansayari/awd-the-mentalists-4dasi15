@@ -1,0 +1,18 @@
+sequenceDiagram
+    actor Client
+    participant BS as Booking Service
+    participant MQ as RabbitMQ
+    participant PS as Provider Service
+    participant PY as Payment Service
+    participant NS as Notification Service
+    Client->>BS: PATCH /api/bookings/42/cancel
+    BS->>BS: Statut = CANCELLED + historique
+    BS-->>Client: 200 OK
+    BS->>MQ: BookingCancelled
+    MQ-->>PS: BookingCancelled
+    PS->>PS: Libérer le créneau
+    MQ-->>PY: BookingCancelled
+    PY->>PY: Examiner le remboursement
+    PY->>MQ: PaymentRefunded
+    MQ-->>NS: PaymentRefunded
+    NS->>NS: Créer la notification du client

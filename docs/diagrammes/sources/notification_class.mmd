@@ -1,0 +1,45 @@
+classDiagram
+    class Notification {
+        -Long id
+        -Long recipientId
+        -NotificationType type
+        -String title
+        -String message
+        -NotificationChannel channel
+        -NotificationStatus status
+        -Long referenceId
+        -String eventId
+        -LocalDateTime createdAt
+        -LocalDateTime sentAt
+        -LocalDateTime readAt
+        +create()
+        +send()
+        +markAsRead()
+        +delete()
+    }
+    class NotificationType {
+        <<enumeration>>
+        ACCOUNT_CREATED
+        BOOKING_CREATED
+        BOOKING_CONFIRMED
+        BOOKING_CANCELLED
+        BOOKING_COMPLETED
+        PAYMENT_SUCCEEDED
+        PAYMENT_FAILED
+        PAYMENT_REFUNDED
+    }
+    class NotificationChannel {
+        <<enumeration>>
+        IN_APP
+        EMAIL
+    }
+    class NotificationStatus {
+        <<enumeration>>
+        PENDING
+        SENT
+        FAILED
+        READ
+    }
+    Notification --> NotificationType : type
+    Notification --> NotificationChannel : channel
+    Notification --> NotificationStatus : status

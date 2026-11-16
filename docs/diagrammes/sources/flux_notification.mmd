@@ -1,0 +1,15 @@
+sequenceDiagram
+    participant PY as Payment Service
+    participant MQ as RabbitMQ
+    participant NS as Notification Service
+    participant US as User Service
+    participant DB as notification_db
+    PY->>MQ: PaymentSucceeded
+    MQ-->>NS: PaymentSucceeded
+    NS->>DB: eventId déjà traité ?
+    DB-->>NS: Non
+    NS->>US: GET /api/users/7
+    US-->>NS: Coordonnées du client
+    NS->>DB: Enregistrer Notification (PAYMENT_SUCCEEDED)
+    NS->>NS: Envoyer (IN_APP / EMAIL)
+    NS->>DB: Statut = SENT

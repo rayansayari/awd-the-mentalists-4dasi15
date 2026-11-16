@@ -1,0 +1,59 @@
+classDiagram
+    class Payment {
+        -Long id
+        -Long bookingId
+        -Long clientId
+        -BigDecimal amount
+        -String currency
+        -PaymentMethod method
+        -PaymentStatus status
+        -String transactionRef
+        -LocalDateTime createdAt
+        -LocalDateTime updatedAt
+        +processPayment()
+        +markSucceeded()
+        +markFailed()
+        +refund()
+    }
+    class Refund {
+        -Long id
+        -Long paymentId
+        -BigDecimal amount
+        -String reason
+        -RefundStatus status
+        -LocalDateTime createdAt
+        -LocalDateTime processedAt
+        +process()
+        +reject()
+    }
+    class Invoice {
+        -Long id
+        -Long paymentId
+        -String invoiceNumber
+        -BigDecimal totalAmount
+        -LocalDateTime issuedAt
+        +generate()
+    }
+    class PaymentStatus {
+        <<enumeration>>
+        PENDING
+        SUCCEEDED
+        FAILED
+        REFUNDED
+    }
+    class PaymentMethod {
+        <<enumeration>>
+        CARD
+        BANK_TRANSFER
+    }
+    class RefundStatus {
+        <<enumeration>>
+        PENDING
+        COMPLETED
+        REJECTED
+    }
+    Payment "1" --> "0..*" Refund : rembourse
+    Payment "1" --> "0..1" Invoice : génère
+    Payment --> PaymentStatus : status
+    Payment --> PaymentMethod : method
+    Refund --> RefundStatus : status
