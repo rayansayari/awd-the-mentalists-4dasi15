@@ -1,0 +1,19 @@
+# Maven
+target/
+!.mvn/wrapper/maven-wrapper.jar
+# IntelliJ
+.idea/
+*.iml
+*.iws
+out/
+# Eclipse / VS Code
+.classpath
+.project
+.settings/
+.vscode/
+# OS / logs
+.DS_Store
+*.log
+# Secrets
+*.env
+application-secret*.properties
